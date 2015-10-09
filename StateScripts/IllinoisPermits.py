@@ -54,22 +54,22 @@ worksheet = workbook.add_worksheet()
 worksheet.write('A1', 'DATE_IS')		#date_issued
 worksheet.write('B1', 'OPERATOR')		#oper_name
 worksheet.write('C1', 'ADDRESS')		#address
-worksheet.write('D1', 'CITY')			#city	
+worksheet.write('D1', 'CITY')		  	#city	
 worksheet.write('E1', 'STATE')			#state
-worksheet.write('F1', 'ZIP')			#zip_code
-worksheet.write('G1', 'REF')			#refnum
+worksheet.write('F1', 'ZIP')		  	#zip_code
+worksheet.write('G1', 'REF')		  	#refnum
 worksheet.write('H1', 'PERMIT')			#permit_no
-worksheet.write('I1', 'WELL_NAME')		#well_name
+worksheet.write('I1', 'WELL_NAME')	#well_name
 worksheet.write('J1', 'LOCATION')		#location
-worksheet.write('K1', 'S')				#sec
-worksheet.write('L1', 'T')				#township
-worksheet.write('M1', 'R')				#range
+worksheet.write('K1', 'S')			  	#sec
+worksheet.write('L1', 'T')			  	#township
+worksheet.write('M1', 'R')			  	#range
 worksheet.write('N1', 'COUNTY')			#county
-worksheet.write('O1', 'WELL_TTYPE')		#type
-worksheet.write('P1', 'WELL_STATU')		#well_status
+worksheet.write('O1', 'WELL_TTYPE')	#type
+worksheet.write('P1', 'WELL_STATU')	#well_status
 worksheet.write('Q1', 'ACTION')			#action
 worksheet.write('R1', 'DRILL_OP')		#drill_oper
-worksheet.write('S1', 'FORMATION')		#formation
+worksheet.write('S1', 'FORMATION')	#formation
 
 #Define starting location to write in excel
 row = 1
