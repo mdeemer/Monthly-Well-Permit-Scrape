@@ -4,25 +4,42 @@ This directory contains the scripts used for each state used to scrape oil and g
 ##Currently Completed States
 Illinois
 
-##In Progress States
 Arkansas
+
+##In Progress States
+Indiana
 
 ##Future State Projects
 Alabama
+
 Colorado
-Indiana
+
 Kansas
-Kentucky
-Louisiana
-Michgian
-Missippi
-Montana
-New Mexico
-North Dakota
-Ohio
-Oklahoma
-Pennsylvania
-Texas
-Utah
-West Virignia
-Wyoming
+
+Kentucky 
+
+Louisiana 
+
+Michgian 
+
+Missippi 
+
+Montana 
+
+New Mexico 
+
+North Dakota 
+
+Ohio 
+
+Oklahoma 
+
+Pennsylvania 
+
+Texas 
+
+Utah 
+
+West Virignia 
+
+Wyoming 
