@@ -1,8 +1,6 @@
 #importing modules
 from bs4 import BeautifulSoup
 import xlsxwriter
-import re
-import string
 
 # Getting user input for the Permit file
 htmlfile = raw_input('''Input file path of the Arkansas permit html file.
@@ -121,7 +119,7 @@ while end > start:
 	permit_number.append((columns1[count]).strip())
 	count = count + 1
 	end = end - 1	
-
+	
 # Getting second column data
 data_breaks = {}	
 count = 0
@@ -133,6 +131,7 @@ for data in columns2:
 		count = count + 1
 	else:
 		count = count + 1
+
 		
 end = data_breaks[2]
 start = data_breaks[1] + 1
@@ -150,16 +149,32 @@ while end > start:
 	count = count + 1
 	end = end - 1	
 
+col2 = []	
+count = 0
+count2 = 1	
+for col in col_data:
+	if "," in col:
+		if col.startswith("P.O. Box") == True:
+			count = count + 1
+			count2 = count2 + 1
+		else:
+			col2.append((col_data[count]).strip())
+			count = count + 1
+			count2 = count2 + 1
+	else:
+		col2.append((col_data[count] + " " + col_data[count2]).strip())
+		count = count + 1
+		count2 = count2 + 1
+	
 #getting refnum data	
 count = 0
-for data in col_data:
+for data in col2:
 	refnum.append(str(data[0:2] + "-" + data[3:6] + "-" + data[7:12]).strip())
-	col_data[count] = (str(data[12:].strip()))
+	col2[count] = (str(data[12:].strip()))
 	count = count + 1
-	
 #Getting Operator data
 count = 0
-for data in col_data:
+for data in col2:
 	if any(string in data for string in op_end) == True:
 		first_string = ""
 		string_position = 100000
@@ -170,19 +185,21 @@ for data in col_data:
 					first_string = string
 					string_position = position
 		oper_name.append(str(data[0:data.find(first_string)].strip())) 
-		col_data[count] = (str(data[data.find(first_string):].strip()))
+		col2[count] = (str(data[data.find(first_string):].strip()))
+	else:
+		oper_name.append("")
 	count = count + 1
 
 	
 #Getting address and city data
 count = 0
-for data in col_data:
+for data in col2:
 	if any(string in data for string in address_end) == True:
 		first_string = ""
 		string_position = 0
 		if "Ste" in data:
 			address_and_city = data[0: data.find(", ")] + " " + data[data.find(", ") + 1:].strip()[0:(data.index(", ")+1)]
-			col_data[count] = (str(data[(len(address_and_city) + 2):].strip()))
+			col2[count] = (str(data[(len(address_and_city) + 2):].strip()))
 			count = count + 1
 			for string in address_end:
 				if string in data:
@@ -191,7 +208,7 @@ for data in col_data:
 			city.append(str(address_and_city[(position + 1):].strip()))
 		else:
 			address_and_city = data[0: data.find(",")]
-			col_data[count] = (str(data[(len(address_and_city) + 1):].strip()))
+			col2[count] = (str(data[(len(address_and_city) + 1):].strip()))
 			for string in address_end:
 				if string in data:
 					position = address_and_city.find(string)
@@ -203,22 +220,22 @@ for data in col_data:
 
 #getting State data
 count = 0
-for data in col_data:
+for data in col2:
 	state.append(str(data[0:3]).strip())
-	col_data[count] = (str(data[3:].strip()))
+	col2[count] = (str(data[3:].strip()))
 	count = count + 1
 
 #getting zip code data
 count = 0
-for data in col_data:
+for data in col2:
 	zc = data[0:11]
 	if "-" in zc:
 		zip_code.append(str(data[0:11]).strip())
-		col_data[count] = (str(data[11:].strip()))
+		col2[count] = (str(data[11:].strip()))
 		count = count + 1
 	else:
 		zip_code.append(str(data[0:6]).strip())
-		col_data[count] = (str(data[6:].strip()))
+		col2[count] = (str(data[6:].strip()))
 		count = count + 1	
 
 		
@@ -313,35 +330,47 @@ for data in col_data:
 col_data = []
 
 #Getting column 4 data
-print columns4
 data_breaks = {}	
 count = 0
 breakcount = 1
-for data in columns1:
-	if "Permit Number" in data:
+for data in columns3:
+	if "Well Name and Number" in data:
 		data_breaks.update({breakcount:count} )
 		breakcount = breakcount + 1
 		count = count + 1
 	else:
 		count = count + 1
-	
-end = data_breaks[2] - 1
-start = data_breaks[1]
-count = data_breaks[1]
+
+col4 =[]		
+count = 0
+colcount = 0
+breakcount = 1
+records = len(columns4)
+while records > 0:
+	if count == data_breaks[breakcount] and breakcount < 7:
+		col4.append("fieldheadingbreak")
+		count = count + 1
+		breakcount = breakcount + 1
+	else:
+		col4.append((columns4[colcount]).strip())
+		count = count + 1
+		colcount = colcount + 1
+		records = records - 1
+end = data_breaks[2]
+start = data_breaks[1] + 1
+count = data_breaks[1] + 1
 while end > start:
-	col_data.append((columns4[count]).strip())
+	col_data.append((col4[count]).strip())
 	count = count + 1
 	end = end - 1
 	
-end = data_breaks[6] - 6
-start = data_breaks[5] - 5
-count = data_breaks[5] - 5
+end = data_breaks[6]
+start = data_breaks[5] + 1
+count = data_breaks[5] + 1
 while end > start:
-	col_data.append((columns4[count]).strip())
+	col_data.append((col4[count]).strip())
 	count = count + 1
 	end = end - 1	
-
-print col_data
 # Getting county and field data
 count = 0
 for data in col_data:
